@@ -27,7 +27,7 @@ class ProductWidget extends StatelessWidget {
                       Expanded(
                         // Image.network(product.image!),
                       child: CachedNetworkImage(
-                        imageUrl: product.image ?? '',
+                        imageUrl: product.image ?? 'no image',
                         placeholder: (context, url) => SizedBox(
                             height: 15,
                             width: 15,
