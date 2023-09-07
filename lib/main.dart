@@ -1,5 +1,6 @@
 import 'package:final_project/HomePage.dart';
 import 'package:final_project/Service/prefs_service.dart';
+import 'package:final_project/provider/favourite_provider.dart';
 import 'package:final_project/provider/product_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +10,9 @@ void main() async{
   await PrefService.init();
   runApp( MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_)=>ProductProvider())
+        ChangeNotifierProvider(create: (_)=>FavouriteProvider()),
+        ChangeNotifierProvider(create: (_)=>ProductProvider()),
+
       ],
       child: MyApp()));
 }

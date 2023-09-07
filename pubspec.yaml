@@ -39,6 +39,9 @@ dependencies:
   bottom_navy_bar: ^6.0.0
   http: ^1.1.0
   cached_network_image: ^3.2.3
+  simple_fontellico_progress_dialog: ^0.3.0
+  skeletonizer: ^0.7.0
+
 
 
   # The following adds the Cupertino Icons font to your application.

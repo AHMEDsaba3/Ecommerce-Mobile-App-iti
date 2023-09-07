@@ -1,11 +1,15 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:final_project/HomePage.dart';
+import 'package:final_project/page/FavouritePage.dart';
+import 'package:final_project/page/Profile_Page.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class HomePageWidget extends StatefulWidget {
   final Widget body;
   late final int currentIndex;
-  HomePageWidget({super.key,required this.body,required this.currentIndex});
+  final leftLogo;
+  HomePageWidget({super.key,required this.body, required this.currentIndex, required this.leftLogo});
 
   @override
   State<HomePageWidget> createState() => _HomePageWidgetState();
@@ -32,7 +36,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         child: IconButton(
                             onPressed: () {},
                             icon: Icon(
-                              EvaIcons.menu_2,
+                              widget.leftLogo,
                               color: Colors.white,
                               size: 30,
                             )),
@@ -70,7 +74,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           child: BottomNavyBar(
             selectedIndex: widget.currentIndex,
             showElevation: true, // use this to remove appBar's elevation
-            onItemSelected: (index) => setState(() => widget.currentIndex = index),
+            onItemSelected: (index) => onBottomNavBArTapped(index, context),
             items: [
               BottomNavyBarItem(
                 inactiveColor: Colors.black,
@@ -151,5 +155,21 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             ],
           ),
         ));
+  }
+  void onBottomNavBArTapped(int index, BuildContext context) {
+    if (index == widget.currentIndex) return;
+    Widget? page;
+    if (index == 0) {
+      page = const HomePage();
+    } else if (index == 1) {
+      page = const HomePage();
+    } else if (index == 2) {
+      page = const FavouritePage();
+    } else {
+      page = const ProfilePage();
+    }
+
+    Navigator.push(context,
+        MaterialPageRoute(builder: (_) => page ?? const SizedBox.shrink()));
   }
 }
