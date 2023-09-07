@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:final_project/model/Product.dart';
+import 'package:final_project/provider/favourite_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:provider/provider.dart';
 
 class ProductPage extends StatefulWidget {
   final Product product;
@@ -64,12 +66,28 @@ class _ProductPageState extends State<ProductPage> {
               padding: const EdgeInsets.only(bottom: 20,left: 25,right: 25),
               child: Row(children: [
                 Spacer(),
-                CircleAvatar(
-                  child: Icon(
-                    Icons.favorite_border,
-                    color: Colors.black,
+                InkWell(
+                  onTap: () => inFavouriteClicked(context),
+                  child: CircleAvatar(
+                    child:
+                    IconButton(onPressed: null,
+                    icon:(Provider.of<FavouriteProvider>(
+                      context,
+                    ).isFavourite(widget.product.id ?? 0)
+                        ? const Icon(
+                      Icons.favorite,
+                      color: Colors.black,
+                      size: 20,
+                    )
+                        : const Icon(
+                      Icons.favorite_border,
+                      color: Colors.black,
+                      size: 20,
+                    )
+                    ),
+                    ),
+                    backgroundColor: Colors.white70,
                   ),
-                  backgroundColor: Colors.white70,
                 ),
 
               ],),
@@ -392,5 +410,16 @@ class _ProductPageState extends State<ProductPage> {
         ),
       ),
     );
+  }
+  void inFavouriteClicked(BuildContext context) {
+    if (Provider.of<FavouriteProvider>(context, listen: false)
+        .isFavourite(widget.product.id ?? 0)) {
+      Provider.of<FavouriteProvider>(context, listen: false)
+          .removeProductFromFavourites(widget.product.id ?? 0);
+      return;
+    }
+
+    Provider.of<FavouriteProvider>(context, listen: false)
+        .addProductToFavourites(widget.product);
   }
 }

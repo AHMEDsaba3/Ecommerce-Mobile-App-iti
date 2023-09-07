@@ -33,15 +33,11 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return HomePageWidget(
-      body: getBody(), currentIndex: 0, leftLogo: EvaIcons.menu_2,);
+      body: getBody(), currentIndex: 0, leftLogo: EvaIcons.home_outline,);
   }
 
   Widget getProduct() {
@@ -189,31 +185,38 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget CatWidget() {
-    if (Provider
-        .of<ProductProvider>(context)
-        .categories == null) {
-      return CircularProgressIndicator.adaptive();
-    } else if (Provider
-        .of<ProductProvider>(context)
-        .categories!
-        .isNotEmpty) {
+    if (Provider.of<ProductProvider>(context).categories?.isEmpty ?? false) {
+      return const Text('No Categories Found');
+    }
+    else{
       return SizedBox(
         height: 70,
-        child: ButtonBar(
-          alignment: MainAxisAlignment.start,
-          buttonPadding: EdgeInsets.all(3),
-          children: Provider
-              .of<ProductProvider>(context)
-              .categories!
-              .map((e) =>
-              CategoryWidget(
-                  CateTitle: e
-              ))
-              .toList(),
+        child: Skeletonizer(
+          enabled: Provider.of<ProductProvider>(context).categories == null
+              ? true
+              : false,
+          child: ButtonBar(
+            alignment: MainAxisAlignment.start,
+            buttonPadding: EdgeInsets.all(3),
+            children: Provider
+                .of<ProductProvider>(context)
+                .categories
+                ?.map((e) =>
+                CategoryWidget(
+                    CateTitle: e
+                ))
+                .toList()??
+                List.generate(
+                    4,
+                        (index) => Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: CategoryWidget(
+                       CateTitle: ' ',
+                      ),
+                    )),
+          ),
         ),
       );
-    } else {
-      return const SizedBox.shrink();
     }
   }
 

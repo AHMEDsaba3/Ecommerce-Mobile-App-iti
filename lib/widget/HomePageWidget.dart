@@ -1,5 +1,6 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:final_project/HomePage.dart';
+import 'package:final_project/page/CartPage.dart';
 import 'package:final_project/page/FavouritePage.dart';
 import 'package:final_project/page/Profile_Page.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         radius: 25,
                         backgroundColor: Colors.black,
                         child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(context,MaterialPageRoute(builder: (context) => HomePage(),));
+                            },
                             icon: Icon(
                               widget.leftLogo,
                               color: Colors.white,
@@ -162,7 +165,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     if (index == 0) {
       page = const HomePage();
     } else if (index == 1) {
-      page = const HomePage();
+      page = const CartPage();
     } else if (index == 2) {
       page = const FavouritePage();
     } else {
